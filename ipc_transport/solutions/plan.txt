@@ -1,0 +1,60 @@
+
+ff: parsing domain file
+domain 'TRANSPORT' defined
+ ... done.
+ff: parsing problem file
+problem 'TRANSPORT-CITY-SEQUENTIAL-5NODES-1000SIZE-2DEGREE-100MINDISTANCE-2TRUCKS-4PACKAGES-2014SEED' defined
+ ... done.
+
+
+metric established (normalized to minimize): ((1.00*[RF0](TOTAL-COST)) - () + 0.00)
+
+checking for cyclic := effects --- OK.display info is 1
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is ((1.00*[RF0](TOTAL-COST)) - () + 0.00)
+
+Real initial cost 90.000000, with 11 actions
+
+
+Cueing down from goal distance:  90.00 into depth [1]
+                                 89.00             [1]
+                                 65.00             [1]
+                                 64.00             [1]
+                                 63.00             [1][2][3]
+                                 62.00             [1][2]
+                                 61.00             [1][2]
+                                 60.00             [1]
+                                 59.00             [1]
+                                 19.00             [1]
+                                  1.00             [1]
+                                  0.00             
+
+ff: found legal plan (steps: 15) as follows
+   0: (PICK-UP TRUCK-1 CITY-LOC-2 PACKAGE-4 CAPACITY-2 CAPACITY-3)
+   1: (DRIVE TRUCK-1 CITY-LOC-2 CITY-LOC-5)
+   2: (DROP TRUCK-1 CITY-LOC-5 PACKAGE-4 CAPACITY-2 CAPACITY-3)
+   3: (PICK-UP TRUCK-2 CITY-LOC-1 PACKAGE-1 CAPACITY-1 CAPACITY-2)
+   4: (DRIVE TRUCK-2 CITY-LOC-1 CITY-LOC-3)
+   5: (DRIVE TRUCK-2 CITY-LOC-3 CITY-LOC-2)
+   6: (DROP TRUCK-2 CITY-LOC-2 PACKAGE-1 CAPACITY-1 CAPACITY-2)
+   7: (DRIVE TRUCK-2 CITY-LOC-2 CITY-LOC-3)
+   8: (PICK-UP TRUCK-2 CITY-LOC-3 PACKAGE-3 CAPACITY-1 CAPACITY-2)
+   9: (DRIVE TRUCK-2 CITY-LOC-3 CITY-LOC-1)
+  10: (DROP TRUCK-2 CITY-LOC-1 PACKAGE-3 CAPACITY-1 CAPACITY-2)
+  11: (PICK-UP TRUCK-2 CITY-LOC-1 PACKAGE-2 CAPACITY-1 CAPACITY-2)
+  12: (DRIVE TRUCK-2 CITY-LOC-1 CITY-LOC-3)
+  13: (DRIVE TRUCK-2 CITY-LOC-3 CITY-LOC-2)
+  14: (DROP TRUCK-2 CITY-LOC-2 PACKAGE-2 CAPACITY-1 CAPACITY-2)
+
+
+Total cost of plan: 206.000000 
+
+time spent:    0.00 seconds instantiating 344 easy, 0 hard action templates
+               0.00 seconds reachability analysis, yielding 48 facts and 344 actions
+               0.00 seconds creating final representation with 48 relevant facts, 1 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 28 states, to a max depth of 3
+               0.00 seconds total time
+

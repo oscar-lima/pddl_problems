@@ -1,0 +1,46 @@
+
+ff: parsing domain file
+domain 'CUBE_STACK' defined
+ ... done.
+ff: parsing problem file
+problem 'P01' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+setting gtt = 1.0 to simulate STRIPS planning.
+
+
+checking for cyclic := effects --- OK.display info is 1
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Real initial cost 5.000000, with 5 actions
+
+
+Cueing down from goal distance:   5.00 into depth [1]
+                                  4.00             [1][2][3][4][5]
+                                  2.00             [1]
+                                  1.00             [1]
+                                  0.00             
+
+ff: found legal plan (steps: 6) as follows
+   0: (UNSTACK C A)
+   1: (PUTDOWN C)
+   2: (PICKUP B)
+   3: (STACK B C)
+   4: (PICKUP A)
+   5: (STACK A B)
+
+
+Total cost of plan: 6.000000 
+
+time spent:    0.00 seconds instantiating 24 easy, 0 hard action templates
+               0.00 seconds reachability analysis, yielding 19 facts and 24 actions
+               0.00 seconds creating final representation with 19 relevant facts, 0 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 14 states, to a max depth of 5
+               0.00 seconds total time
+
