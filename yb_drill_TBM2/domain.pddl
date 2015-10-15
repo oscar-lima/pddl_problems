@@ -31,23 +31,29 @@
 	(free ?g - gripper)
  )
 
+ (:functions
+     (total-cost) - number
+ )
+
 ; moves a robot ?r from ?source - location to a ?destination - location
 ; NOTE : the situation in which the robot arm is in any position before moving 
 ;is not handled at the planning level, hence we advise to always move the arm 
 ; to a folded position, then navigate
- (:action move                                
-     :parameters (?r - robot ?source ?destination - location)
+ (:action move_base
+     :parameters (?r - robot ?source ?destination - location ?g - gripper)
      :precondition (and (at ?r ?source)
+     					(free ?g)
      			   )
      :effect (and (not (at ?r ?source))
      			  (at ?r ?destination)
+     			  (increase (total-cost) 9)
      		 )
  )
 
  ; pick an object ?o which is inside a location ?l with a free gripper ?g 
  ; from location ?l with robot ?r that is at location ?l
  (:action pick                                
-     :parameters (?r - robot ?g - gripper ?o - object ?l - location)
+     :parameters (?o - object ?l - location ?r - robot ?g - gripper)
      :precondition 	(and 	(in ?o ?l)
                       		(at ?r ?l)
                       		(free ?g)
@@ -55,19 +61,23 @@
      :effect (and  	(holding ?g ?o) 
                    	(not (in ?o ?l))
                    	(not (free ?g))
+                   	(increase (total-cost) 3)
              )
  )
 
  ; store an object ?o in a robot platform ?rp which is not occupied with a gripper ?g 
  ; which is holding the object ?o
  (:action store
-     :parameters (?o - object ?g - gripper ?rp - robot_platform)
+     :parameters (?o - object ?rp - robot_platform ?g - gripper)
      :precondition 	(and 	(holding ?g ?o)
                       		(not (occupied ?rp))
+                      		(not (free ?g))
                    	)
-     :effect (and  	(free ?g)
+     :effect (and  	(not (holding ?g ?o))
+     				(free ?g)
      			   	(stored ?o ?rp)
                    	(occupied ?rp)
+                   	(increase (total-cost) 1)
              )
  )
 
@@ -76,10 +86,13 @@
      :parameters (?o - object ?rp - robot_platform ?g - gripper)
      :precondition 	(and 	(free ?g)
                       		(stored ?o ?rp)
+                      		(not (holding ?g ?o))
                    	)
      :effect (and  	(not (free ?g))
      			   	(not (stored ?o ?rp))
                    	(not (occupied ?rp))
+                   	(holding ?g ?o)
+                   	(increase (total-cost) 1)
              )
  )
 
@@ -89,9 +102,12 @@
      :parameters (?o - object ?l - location ?g - gripper ?r - robot ?rp - robot_platform)
      :precondition 	(and 	(at ?r ?l)
      						(holding ?g ?o)
+     						(not (stored ?o ?rp))
                    	)
      :effect (and 	(free ?g)
      				(in ?o ?l)
+     				(not (holding ?g ?o))
+     				(increase (total-cost) 3)
              )
  )
 )

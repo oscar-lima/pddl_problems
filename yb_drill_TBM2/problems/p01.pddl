@@ -14,6 +14,7 @@
   )
 
   (:init 
+    (= (total-cost) 0)
   	(at youbot start)
   	(in o1 s2)
   	(in o2 s2)
@@ -28,9 +29,10 @@
   ) 
 
   (:goal
-  		(and 	(in o5 drill_location)
-  				(in o2 force_fitting_location)
-  				(at youbot exit)
+  		(and 	(in o1 drill_location)
+  				  (in o2 force_fitting_location)
   		)
   )
+
+  (:metric minimize (total-cost))
  )
