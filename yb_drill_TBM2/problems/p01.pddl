@@ -3,34 +3,32 @@
   (:domain yb_drill_TBM2)
 
   (:objects 
-  	s1 s2 s3 s4 s5 - location
-  	drill_location force_fitting_location conveyor_belt_location cb_trash_location - location
-  	exit start - location
-  	yb_platform1 yb_platform2 yb_platform3 - robot_platform
-  	youbot - robot
+  	S1 S2 S3 S4 S5 - location
+  	EXIT START - location
+  	platform_middle platform_left platform_right - robot_platform
+  	YOUBOT - robot
   	o1 o2 o3 o4 o5 o6 - object
-  	faulty_plate_1 faulty_plate_2 fixable_plate_1 fixable_plate_2 - object
   	dynamixel - gripper
   )
 
   (:init 
     (= (total-cost) 0)
-  	(at youbot start)
-  	(in o1 s2)
-  	(in o2 s2)
-  	(in o3 s3)
-  	(in o4 s3)
-  	(in o5 s4)
-  	(in o6 s5)
-	(not (occupied yb_platform1))
-	(not (occupied yb_platform2))
-	(not (occupied yb_platform3))
-	(free dynamixel)
+  	(at youbot START)
+  	(on o1 S2)
+  	(on o2 S2)
+  	(on o3 S3)
+  	(on o4 S3)
+  	(on o5 S4)
+  	(on o6 S5)
+	(not (occupied platform_middle))
+	(not (occupied platform_left))
+	(not (occupied platform_right))
+	(gripper_is_free dynamixel)
   ) 
 
   (:goal
-  		(and 	(in o1 drill_location)
-  				  (in o2 force_fitting_location)
+  		(and	(on o1 S1)
+  				(on o3 S4)
   		)
   )
 
