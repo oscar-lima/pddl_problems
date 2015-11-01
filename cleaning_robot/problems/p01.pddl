@@ -16,7 +16,9 @@
   ) 
 
   (:goal
-  	(  at ghost locB
+  	(  and (at ghost locA)
+      (clean locB)
+      (clean locA)
     )
   )
  )
