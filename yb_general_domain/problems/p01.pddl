@@ -1,6 +1,6 @@
 (define (problem p01)
 	
-  (:domain yb_drill_TBM2)
+  (:domain yb_general_domain)
 
   (:objects 
   	S1 S2 S3 S4 assembly_station cb_ramp blue_box_location - location

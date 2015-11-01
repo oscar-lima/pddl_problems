@@ -2,7 +2,7 @@
 ; this includes rockin and robocup
 ; author : Oscar Lima, olima_84@yahoo.com
 
-(define (domain yb_drill_TBM2)
+(define (domain yb_general_domain)
  (:requirements :typing )
  (:types 
   	location      		; locations in the arena, points of interest
