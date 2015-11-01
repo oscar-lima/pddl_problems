@@ -1,4 +1,5 @@
-;; Specification in PDDL1 of the rockin TBM2 drill test domain
+; Specification in PDDL1 of the rockin TBM2 drill test domain
+; author : Oscar Lima, olima_84@yahoo.com
 
 (define (domain yb_drill_TBM2)
  (:requirements :typing )
@@ -21,7 +22,7 @@
  	; object ?o is stored on robot platform ?rp
  	(stored ?o - object ?rp - robot_platform) 	
  	
- 	; robot platform slot ?rp is occupied
+ 	; robot platform ?rp is occupied, yb has 3 free places to store objects
 	(occupied ?rp - robot_platform)
 	
 	; gripper ?g is holding object ?o
@@ -35,6 +36,18 @@
 
 	; object ?o is inserted inside object ?h
 	(in ?peg - object ?hole - object)
+
+	; the object ?o is heavy and cannot be lifted by the robot
+	(heavy ?o)
+
+	; the object ?o is drilled, this work has performed by a drill press machine
+	(drilled ?o)
+
+	; specifiy that this object is a machine that can perform a drill job
+	(this_object_can_drill ?drill)
+
+	; specifies if an object ?o can be inserted into another object
+	(insertable ?o)
  )
 
  (:functions
@@ -52,17 +65,18 @@
      			   )
      :effect (and (not (at ?r ?source))
      			  (at ?r ?destination)
-     			  (increase (total-cost) 90)
+     			  (increase (total-cost) 10)
      		 )
  )
 
  ; pick an object ?o which is inside a location ?l with a free gripper ?g 
- ; from location ?l with robot ?r that is at location ?l
+ ; with robot ?r that is at location ?l
  (:action pick                                
      :parameters (?o - object ?l - location ?r - robot ?g - gripper)
      :precondition 	(and 	(on ?o ?l)
                       		(at ?r ?l)
                       		(gripper_is_free ?g)
+                      		(not (heavy ?o))
                    	)
      :effect (and  	(holding ?g ?o) 
                    	(not (on ?o ?l))
@@ -104,7 +118,7 @@
 
 ; places and object ?o with a gripper ?g which is holding the object ?o
 ; with a robot ?r at a location ?l on robot_platform ?rp
- (:action place_on_platform
+ (:action drop_on_platform
      :parameters (?o - object ?l - location ?g - gripper ?r - robot ?rp - robot_platform)
      :precondition 	(and 	(at ?r ?l)
      						(holding ?g ?o)
@@ -121,18 +135,36 @@
  (:action insert
    :parameters (?peg ?hole - object ?g - gripper ?r - robot ?l - location)
    :precondition 	(and 	(at ?r ?l)
+   							(on ?hole ?l)
    							(holding ?g ?peg)
    							(empty_object ?hole)
    							(not (gripper_is_free ?g))
    							(not (in ?peg ?hole))
-   							(on ?hole ?l)
+   							(insertable ?peg)
    					)
    :effect 	(and 	(not (holding ?g ?peg))
-   					(not (empty_object ?hole))
+   					;(not (empty_object ?hole))
    					(gripper_is_free ?g)
    					(in ?peg ?hole)
-   					(increase (total-cost) 1)
    					(on ?peg ?l)
+   					(heavy ?peg)
+   					(heavy ?hole)
+   					(increase (total-cost) 1)
    			)
  )
+
+ ; a robot ?r in a ?drill location holding an object o? places the object in the drill,
+ ; actuates the drill, then picks the fixed plate
+ (:action drill_object
+   :parameters 		(?o ?drill - object ?l - location ?r - robot ?g - gripper)
+   :precondition 	(and 	(at ?r ?l)
+   							(holding ?g ?o)
+   							(on ?drill ?l)
+   							(this_object_can_drill ?drill)
+   					)
+   :effect 			(and 	(drilled ?o)
+   							(increase (total-cost) 1)
+   					)
+ )
+
 )
