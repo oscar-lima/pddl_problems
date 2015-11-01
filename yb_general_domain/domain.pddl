@@ -39,16 +39,16 @@
 	(in ?peg - object ?hole - object)
 
 	; the object ?o is heavy and cannot be lifted by the robot
-	(heavy ?o)
+	(heavy ?o - object)
 
 	; the object ?o is drilled, this work has performed by a drill press machine
-	(drilled ?o)
+	(drilled ?o - object)
 
 	; specifiy that this object is a machine that can perform a drill job
-	(this_object_can_drill ?drill)
+	(this_object_can_drill ?drill - object)
 
 	; specifies if an object ?o can be inserted into another object
-	(insertable ?o)
+	(insertable ?o - object)
 
 	; a location ?l is perceived when object recognition was triggered
 	; gets lost if the robot does large motions
