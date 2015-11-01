@@ -1,4 +1,5 @@
-; Specification in PDDL1 of the rockin TBM2 drill test domain
+; Specification in PDDL1 for youbot all competitions general domain
+; this includes rockin and robocup
 ; author : Oscar Lima, olima_84@yahoo.com
 
 (define (domain yb_drill_TBM2)
@@ -48,6 +49,10 @@
 
 	; specifies if an object ?o can be inserted into another object
 	(insertable ?o)
+
+	; a location ?l is perceived when object recognition was triggered
+	; gets lost if the robot does large motions
+	(perceived ?l - location)
  )
 
  (:functions
@@ -65,8 +70,21 @@
      			   )
      :effect (and (not (at ?r ?source))
      			  (at ?r ?destination)
-     			  (increase (total-cost) 10)
+     			  (not (perceived ?source))
+     			  (increase (total-cost) 10)     			  
      		 )
+ )
+
+ ; perceive a location ?l with a empty gripper ?g to find the positions of 
+ ; the objects ?o before they can be picked from a location ?l
+ (:action perceive
+   :parameters (?l - location ?r - robot ?g - gripper)
+   :precondition 	(and 	(at ?r ?l)
+   							(gripper_is_free ?g)
+   							(not (perceived ?l))
+   					)
+   :effect 	(and 	(perceived ?l)
+  			)
  )
 
  ; pick an object ?o which is inside a location ?l with a free gripper ?g 
@@ -75,6 +93,7 @@
      :parameters (?o - object ?l - location ?r - robot ?g - gripper)
      :precondition 	(and 	(on ?o ?l)
                       		(at ?r ?l)
+                      		(perceived ?l)
                       		(gripper_is_free ?g)
                       		(not (heavy ?o))
                    	)
