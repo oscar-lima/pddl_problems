@@ -63,7 +63,7 @@
 ; NOTE : the situation in which the robot arm is in any position before moving 
 ; is not handled at the planning level, hence we advise to always move the arm 
 ; to a folded position, then navigate
- (:action move_base
+ (:action move_base_safe
      :parameters (?source ?destination - location ?r - robot ?g - gripper)
      :precondition (and (at ?r ?source)
      					(gripper_is_free ?g)
@@ -71,7 +71,7 @@
      :effect (and (not (at ?r ?source))
      			  (at ?r ?destination)
      			  (not (perceived ?source))
-     			  (increase (total-cost) 10)     			  
+     			  (increase (total-cost) 10)
      		 )
  )
 
