@@ -2,6 +2,7 @@
 
   (:requirements
     :typing
+    :negative-preconditions
   )
 
   (:types
