@@ -14,7 +14,8 @@
   ) 
 
   (:goal
-  	(  and (package_is_loaded pkg1)
+  	(  and (pkg_at pkg1 locA)
+           (pkg_at pkg2 locA)
     )
   )
  )
